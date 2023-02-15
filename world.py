@@ -11,6 +11,7 @@ class World:
         self.grid = []
         self.unfixedCoord = []
 
+        # Initiliaze all tiles
         for y in range(height):
             self.grid.append( [] )
             for x in range(width):
@@ -24,6 +25,7 @@ class World:
             minEntropy = float('inf')
             minEntropyList = []
 
+            # Find tile with least entropy (least tile choices)
             for x, y in self.unfixedCoord:
                 curTile = self.grid[y][x]
                 if ( len(curTile.validTypes) < minEntropy ):
@@ -32,28 +34,32 @@ class World:
                 elif ( len(curTile.validTypes) == minEntropy ):
                     minEntropyList.append( (x, y) )
 
+            # If tile has zero choices, exit gracefully
             if (minEntropy == 0):
                 print("Failed")
                 return
 
+            # Choose random tile with minimum entropy
             x, y = choice( minEntropyList )
             curTile = self.grid[y][x]
             self.unfixedCoord.remove( (x, y) )
 
+            # Choose random valid type
             tileType = choice(curTile.validTypes)
-            # print(x, y, minEntropy)
-
             curTile.setType(tileType)
 
+            # Collapse neighboring tiles
             self.collapseWave(x, y)
 
             remaining -= 1
 
+            # Show progress, optional
             self.printWorld()
             os.system('cls')
 
     def collapseWave(self, x, y):
 
+        # Queue of updated restricted tiles
         queue = [(x, y)]
 
         while len(queue) > 0:
@@ -99,7 +105,7 @@ class World:
 
 
     def printWorld(self, ASCII=True):
-
+        # Prints world
         for row in self.grid:
             for tile in row:
                 if (ASCII) :

@@ -55,6 +55,9 @@ class Tile:
         self.validTypes = list( validTypes & potentialTypes )
 
         return True
+    
+
+    
 if mode == 0:
     tileTypes = {
 

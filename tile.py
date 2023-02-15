@@ -426,8 +426,8 @@ elif mode == 2:
             "name" : "wall_bottom",
             "png" : "",
             "ascii" : "═",
-            "right" : ["wall_bottom", "corner_bottomright", "invert_topleft"],
-            "left" : ["wall_bottom", "corner_bottomleft", "invert_topright"],
+            "right" : ["wall_bottom", "corner_bottomright", "invert_topright"],
+            "left" : ["wall_bottom", "corner_bottomleft", "invert_topleft"],
             "top" : ["floor"],
             "bottom" : ["solid"]
         },
@@ -511,7 +511,7 @@ elif mode == 2:
 
         "invert_bottomleft" : 
         {
-            "name" : "invert_bottomright",
+            "name" : "invert_bottomleft",
             "png" : "",
             "ascii" : "╚",
             "right" : ["wall_top", "corner_topright", "invert_bottomright"],
@@ -595,8 +595,8 @@ elif mode == 3:
             "name" : "wall_bottom",
             "png" : "",
             "ascii" : "═",
-            "right" : ["wall_bottom", "corner_bottomright", "invert_topleft"],
-            "left" : ["wall_bottom", "corner_bottomleft", "invert_topright"],
+            "right" : ["wall_bottom", "corner_bottomright", "invert_topright"],
+            "left" : ["wall_bottom", "corner_bottomleft", "invert_topleft"],
             "top" : ["floor"],
             "bottom" : ["solid"]
         },
@@ -680,7 +680,7 @@ elif mode == 3:
 
         "invert_bottomleft" : 
         {
-            "name" : "invert_bottomright",
+            "name" : "invert_bottomleft",
             "png" : "",
             "ascii" : "╚",
             "right" : ["wall_top", "corner_topright"],

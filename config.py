@@ -7,7 +7,7 @@ height = 20
 # 1     : Non-rectangular rooms
 # 2     : Walls have thickness
 # 3     : Pillars have thickness
-mode = 2
+mode = 3
 
 
 

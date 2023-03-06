@@ -1,6 +1,7 @@
-from config import width, height
+from config import width, height, mode
 from tile import Tile, tileTypes
-from random import choice 
+from random import choice, choices
+import numpy as np
 import time
 import os
 
@@ -45,7 +46,7 @@ class World:
             self.unfixedCoord.remove( (x, y) )
 
             # Choose random valid type
-            tileType = choice(curTile.validTypes)
+            tileType = self.chooseTile(x, y)
             curTile.setType(tileType)
 
             # Collapse neighboring tiles
@@ -54,8 +55,65 @@ class World:
             remaining -= 1
 
             # Show progress, optional
-            self.printWorld()
             os.system('cls')
+            self.printWorld()
+
+    def chooseTile(self, x, y):
+        curTile = self.grid[y][x]
+        
+        if mode < 4:
+            return choice(curTile.validTypes)
+        
+        weights = np.ones( (len(curTile.validTypes)) )
+        
+        
+        if (x > 0):
+            # Left Neighbor            
+            neigh = self.grid[y][x - 1]
+
+            if neigh.determined:
+                neighWeights = tileTypes[neigh.type]["rightWeights"]
+
+                for i in range(len(curTile.validTypes)):
+                    if curTile.validTypes[i] in neighWeights:
+                        weights[i] *= neighWeights[curTile.validTypes[i]]
+
+        if (x < width - 1):
+            # right Neighbor
+            neigh = self.grid[y][x + 1]
+
+            if neigh.determined:
+                neighWeights = tileTypes[neigh.type]["leftWeights"]
+
+                for i in range(len(curTile.validTypes)):
+                    if curTile.validTypes[i] in neighWeights:
+                        weights[i] *= neighWeights[curTile.validTypes[i]]
+
+        if (y > 0):
+            # top Neighbor
+            neigh = self.grid[y - 1][x]
+
+            if neigh.determined:
+                neighWeights = tileTypes[neigh.type]["bottomWeights"]
+
+                for i in range(len(curTile.validTypes)):
+                    if curTile.validTypes[i] in neighWeights:
+                        weights[i] *= neighWeights[curTile.validTypes[i]]
+
+        if (y < height - 1):
+            # bottom Neighbor
+            neigh = self.grid[y +  1][x]
+
+            if neigh.determined:
+                neighWeights = tileTypes[neigh.type]["topWeights"]
+
+                for i in range(len(curTile.validTypes)):
+                    if curTile.validTypes[i] in neighWeights:
+                        weights[i] *= neighWeights[curTile.validTypes[i]]
+        
+        c = choices(curTile.validTypes, weights=weights)
+
+        return c[0]
 
     def collapseWave(self, x, y):
 

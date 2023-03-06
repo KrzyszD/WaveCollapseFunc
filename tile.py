@@ -29,6 +29,11 @@ class Tile:
         # Go through all potential tile types
         for validType in self.validTypes:
             # Add potential neighbor types
+            # print()
+            # print(validType)
+            # print(tileTypes[validType])
+            # print(tileTypes[validType][direction])
+            # print()
             neigh = neigh.union( set(tileTypes[validType][direction]) )
 
         return list(neigh)
@@ -687,6 +692,295 @@ elif mode == 3:
             "left" : ["floor"],
             "top" : ["wall_right", "corner_topright"],
             "bottom" : ["floor"]
+        }
+
+    }
+elif mode == 4:
+    tileTypes = {
+
+        "" : 
+        {
+            "name" : "",
+            "png" : "",
+            "ascii" : "○",
+
+            "right" : [""],
+            "rightWeights" : {},
+
+            "left" : [""],
+            "leftWeights" : {},
+
+            "top" : [""],
+            "topWeights" : {},
+
+            "bottom" : [""],
+            "bottomWeights" : {}
+        },
+
+        "floor" : 
+        {
+            "name" : "floor",
+            "png" : "",
+            "ascii" : " ",
+
+            "right" : ["floor", "wall_right", "invert_bottomleft", "invert_topleft"],
+            "rightWeights" : {"floor": 2},
+
+            "left" : ["floor", "wall_left", "invert_bottomright", "invert_topright"],
+            "leftWeights" : {"floor": 2},
+
+            "top" : ["floor", "wall_top", "invert_bottomright", "invert_bottomleft"],
+            "topWeights" : {"floor": 2},
+
+            "bottom" : ["floor", "wall_bottom", "invert_topright", "invert_topleft"],
+            "bottomWeights" : {"floor": 2}
+        },
+
+        "solid" : 
+        {
+            "name" : "solid",
+            "png" : "",
+            "ascii" : "█",
+
+            "right" : ["solid", "wall_left", "corner_topleft", "corner_bottomleft"],
+            "rightWeights" : {"solid": 0.5},
+
+            "left" : ["solid", "wall_right", "corner_topright", "corner_bottomright"],
+            "leftWeights" : {"solid": 0.5},
+
+            "top" : ["solid", "wall_bottom", "corner_bottomright", "corner_bottomleft"],
+            "topWeights" : {"solid": 0.5},
+
+            "bottom" : ["solid", "wall_top", "corner_topright", "corner_topleft"],
+            "bottomWeights" : {"solid": 0.5}
+        },
+
+        "wall_right" : 
+        {
+            "name" : "wall_right",
+            "png" : "",
+            "ascii" : "║",
+
+            "right" : ["solid"],
+            "rightWeights" : {},
+
+            "left" : ["floor"],
+            "leftWeights" : {},
+
+            "top" : ["wall_right", "corner_topright", "invert_topleft"],
+            "topWeights" : {"wall_right": 1.5},
+
+            "bottom" : ["wall_right", "corner_bottomright", "invert_bottomleft"],
+            "bottomWeights" : {"wall_right": 1.5}
+        },
+
+        "wall_left" : 
+        {
+            "name" : "wall_left",
+            "png" : "",
+            "ascii" : "║",
+
+            "right" : ["floor"],
+            "rightWeights" : {},
+
+            "left" : ["solid"],
+            "leftWeights" : {},
+
+            "top" : ["wall_left", "corner_topleft", "invert_topright"],
+            "topWeights" : {"wall_left": 1.5},
+
+            "bottom" : ["wall_left", "corner_bottomleft", "invert_bottomright"],
+            "bottomWeights" : {"wall_left": 1.5}
+        },
+
+        "wall_top" : 
+        {
+            "name" : "wall_top",
+            "png" : "",
+            "ascii" : "═",
+
+            "right" : ["wall_top", "corner_topright", "invert_bottomright"],
+            "rightWeights" : {"wall_top": 1.5},
+
+            "left" : ["wall_top", "corner_topleft", "invert_bottomleft"],
+            "leftWeights" : {"wall_top": 1.5},
+
+            "top" : ["solid"],
+            "topWeights" : {},
+
+            "bottom" : ["floor"],
+            "bottomWeights" : {}
+        },
+
+        "wall_bottom" : 
+        {
+            "name" : "wall_bottom",
+            "png" : "",
+            "ascii" : "═",
+
+            "right" : ["wall_bottom", "corner_bottomright", "invert_topright"],
+            "rightWeights" : {"wall_bottom": 1.5},
+
+            "left" : ["wall_bottom", "corner_bottomleft", "invert_topleft"],
+            "leftWeights" : {"wall_bottom": 1.5},
+
+            "top" : ["floor"],
+            "topWeights" : {},
+
+            "bottom" : ["solid"],
+            "bottomWeights" : {}
+        },
+
+        "corner_topright" : 
+        {
+            "name" : "corner_topright",
+            "png" : "",
+            "ascii" : "╗",
+
+            "right" : ["solid"],
+            "rightWeights" : {},
+
+            "left" : ["wall_top", "invert_bottomleft"],
+            "leftWeights" : {"wall_top": 1.5},
+
+            "top" : ["solid"],
+            "topWeights" : {},
+
+            "bottom" : ["wall_right", "invert_bottomleft"],
+            "bottomWeights" : {"wall_right": 1.5}
+        },
+
+        "corner_topleft" : 
+        {
+            "name" : "corner_topleft",
+            "png" : "",
+            "ascii" : "╔",
+
+            "right" : ["wall_top", "invert_bottomright"],
+            "rightWeights" : {"wall_top": 1.5},
+
+            "left" : ["solid"],
+            "leftWeights" : {},
+
+            "top" : ["solid"],
+            "topWeights" : {},
+
+            "bottom" : ["wall_left", "invert_bottomright"],
+            "bottomWeights" : {"wall_left": 1.5}
+        },
+
+        "corner_bottomright" : 
+        {
+            "name" : "corner_bottomright",
+            "png" : "",
+            "ascii" : "╝",
+
+            "right" : ["solid"],
+            "rightWeights" : {},
+
+            "left" : ["wall_bottom", "invert_topleft"],
+            "leftWeights" : {"wall_bottom": 1.5},
+
+            "top" : ["wall_right", "invert_topleft"],
+            "topWeights" : {"wall_right": 1.5},
+
+            "bottom" : ["solid"],
+            "bottomWeights" : {}
+        },
+
+        "corner_bottomleft" : 
+        {
+            "name" : "corner_bottomleft",
+            "png" : "",
+            "ascii" : "╚",
+
+            "right" : ["wall_bottom", "invert_topright"],
+            "rightWeights" : {"wall_bottom": 1.5},
+
+            "left" : ["solid"],
+            "leftWeights" : {},
+
+            "top" : ["wall_left", "invert_topright"],
+            "topWeights" : {"wall_left": 1.5},
+
+            "bottom" : ["solid"],
+            "bottomWeights" : {}
+        },
+
+        "invert_topright" : 
+        {
+            "name" : "invert_topright",
+            "png" : "",
+            "ascii" : "╗",
+
+            "right" : ["floor"],
+            "rightWeights" : {},
+
+            "left" : ["wall_bottom", "corner_bottomleft"],
+            "leftWeights" : {"wall_bottom": 1.5},
+
+            "top" : ["floor"],
+            "topWeights" : {},
+
+            "bottom" : ["wall_left", "corner_bottomleft"],
+            "bottomWeights" : {"wall_left": 1.5}
+        },
+
+        "invert_topleft" : 
+        {
+            "name" : "invert_topleft",
+            "png" : "",
+            "ascii" : "╔",
+
+            "right" : ["wall_bottom", "corner_bottomright"],
+            "rightWeights" : {"wall_bottom": 1.5},
+            
+            "left" : ["floor"],
+            "leftWeights" : {},
+
+            "top" : ["floor"],
+            "topWeights" : {},
+
+            "bottom" : ["wall_right", "corner_bottomright"],
+            "bottomWeights" : {"wall_right": 1.5}
+        },
+
+        "invert_bottomright" : 
+        {
+            "name" : "invert_bottomright",
+            "png" : "",
+            "ascii" : "╝",
+
+            "right" : ["floor"],
+            "rightWeights" : {},
+
+            "left" : ["wall_top", "corner_topleft"],
+            "leftWeights" : {"wall_top": 1.5},
+
+            "top" : ["wall_left", "corner_topleft"],
+            "topWeights" : {"wall_left": 1.5},
+
+            "bottom" : ["floor"],
+            "bottomWeights" : {}
+        },
+
+        "invert_bottomleft" : 
+        {
+            "name" : "invert_bottomleft",
+            "png" : "",
+            "ascii" : "╚",
+
+            "right" : ["wall_top", "corner_topright"],
+            "rightWeights" : {"wall_top": 1.5},
+
+            "left" : ["floor"],
+            "leftWeights" : {},
+
+            "top" : ["wall_right", "corner_topright"],
+            "topWeights" : {"wall_right": 1.5},
+
+            "bottom" : ["floor"],
+            "bottomWeights" : {}
         }
 
     }

@@ -1,6 +1,7 @@
 from tile import *
 from config import *
 from world import *
+import os
 
 
 if __name__ == "__main__":
@@ -10,6 +11,8 @@ if __name__ == "__main__":
 
     world.collapse()
 
+
+    os.system('cls')
     world.printWorld()
 
     pass
